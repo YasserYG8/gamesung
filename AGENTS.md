@@ -39,8 +39,9 @@ gamesung/
 
 ### 3. Branch and Commit
 
-- Branch from `dev`
-- Use branch naming: `feature/`, `fix/`, `docs/`, `refactor/`, `test/`
+- Branch from `main`
+- Branch name must reference the GitHub issue: `issue/<number>-<description>`
+- Example: `issue/42-add-timeout-chess`
 - Commit messages: `type: short description`
 - One logical change per commit
 
@@ -70,9 +71,9 @@ gamesung/
 
 ### 6. Pull Request
 
-- Target the `dev` branch
+- Target the `main` branch
 - Write a clear PR description
-- Reference related issues
+- Reference the issue: "Closes #<number>"
 - Keep PRs small and focused
 
 ## Forbidden Actions

@@ -24,28 +24,24 @@ git remote -v
 
 ### 4. Create a Branch
 
-Always create a new branch from `dev` for your changes. Use a descriptive name following this convention:
+Always create a new branch from `main`. Branch name must match the GitHub issue.
 
 ```bash
-git checkout dev
-git pull upstream dev
-git checkout -b <type>/<short-description>
+git checkout main
+git pull upstream main
+git checkout -b issue/<issue-number>-<short-description>
 ```
+
+**Examples:**
+- `issue/42-add-timeout-chess`
+- `issue/108-fix-bot-move-validation`
+- `issue/156-update-api-docs`
 
 **Branch naming:**
 
 | Prefix | Purpose |
 |--------|---------|
-| `feature/` | New functionality |
-| `fix/` | Bug fixes |
-| `docs/` | Documentation changes |
-| `refactor/` | Code restructuring without behavior changes |
-| `test/` | Adding or updating tests |
-
-**Examples:**
-- `feature/add-timeout-chess`
-- `fix/bot-move-validation`
-- `docs/update-api-reference`
+| `issue/<number>/` | Work related to a GitHub issue |
 
 ### 5. Make Your Changes
 
@@ -80,17 +76,17 @@ git push origin <your-branch>
 
 1. Go to the original repository
 2. Click **New Pull Request**
-3. Select `dev` as the base branch
+3. Select `main` as the base branch
 4. Select your branch as the compare branch
 5. Fill in the PR template:
    - **Title:** Clear, concise description
    - **Description:** What changed and why
-   - **Related Issue:** Link to the issue (if any)
+   - **Related Issue:** Link to the issue (e.g., "Closes #42")
 
 ## Pull Request Guidelines
 
 - One feature/fix per PR
-- PR should target the `dev` branch, not `main`
+- PR should target the `main` branch
 - Keep PRs small and focused
 - Describe what you changed and why
 - Reference any related issues
