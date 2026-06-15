@@ -1,0 +1,10 @@
+{
+  "name": "@gamesung/server",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "go run main.go",
+    "build": "go build -o bin/server main.go",
+    "start": "./bin/server"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "gamesung",
+  "version": "0.0.1",
+  "private": true,
+  "description": "An open-source platform for creating, building, and sharing games",
+  "scripts": {
+    "dev:web": "pnpm --filter @gamesung/web dev",
+    "dev:server": "pnpm --filter @gamesung/server dev",
+    "dev": "pnpm run dev:web",
+    "build": "pnpm --filter @gamesung/web build",
+    "start": "pnpm --filter @gamesung/web start",
+    "lint": "pnpm --filter @gamesung/web lint"
+  }
+}
