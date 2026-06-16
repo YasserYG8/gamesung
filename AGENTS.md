@@ -39,9 +39,8 @@ gamesung/
 
 ### 3. Branch and Commit
 
-- Branch from `main`
-- Branch name must reference the GitHub issue: `issue/<number>-<description>`
-- Example: `issue/42-add-timeout-chess`
+- Contributors should branch from `main`
+- Refer to `CONTRIBUTING.md` for the complete branch naming convention
 - Commit messages: `type: short description`
 - One logical change per commit
 

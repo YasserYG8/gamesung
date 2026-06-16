@@ -103,19 +103,18 @@ Frontend starts on `http://localhost:3000`
 Contributions are welcome! To get started:
 
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
+2. Create a new branch (`git checkout -b issue/<number>-<short-description>`)
 3. Make your changes
-4. Commit your changes (`git commit -m "Add your feature"`)
-5. Push to the branch (`git push origin feature/your-feature`)
+4. Commit your changes (`git commit -m "feat: Add your feature"`)
+5. Push to the branch (`git push origin issue/<number>-<short-description>`)
 6. Open a Pull Request
 
-## Branches
+## Branching
 
-| Branch | Purpose |
-|--------|---------|
-| `main` | Stable, production-ready code |
-| `dev` | Active development |
-| `features` | Feature branches and experiments |
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed branch naming rules.
+
+All branches should be created from `main` and follow the convention:
+`issue/<number>-<short-description>`
 
 ## License
 
