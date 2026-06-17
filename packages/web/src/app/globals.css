@@ -1,3 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #1a1a2e;
+  --color-fg: #eaeaea;
+  --color-dark-square: #769656;
+  --color-light-square: #eeeed2;
+  --color-selected: #f6f669;
+  --color-possible: rgba(0, 0, 0, 0.1);
+  --color-error: #ff4444;
+  --color-card-bg: rgba(255, 255, 255, 0.05);
+  --color-card-border: rgba(255, 255, 255, 0.1);
+  --color-card-bg-hover: rgba(255, 255, 255, 0.1);
+  --color-input-bg: rgba(255, 255, 255, 0.1);
+  --color-input-border: rgba(255, 255, 255, 0.2);
+  --color-success: #4ade80;
+  --color-info: #60a5fa;
+  --color-board-border: rgba(0, 0, 0, 0.3);
+  --color-piece-white: #fff;
+  --color-piece-shadow: #000;
+  --color-piece-black: #000;
+  --color-piece-light-shadow: #555;
+  --color-move-dot: rgba(0, 0, 0, 0.15);
+  --color-resign-hover: rgba(255, 80, 80, 0.3);
+  --color-resign-border: rgba(255, 80, 80, 0.6);
+  --color-new-game-hover: rgba(80, 160, 255, 0.25);
+  --color-new-game-border: rgba(80, 160, 255, 0.6);
+  --color-button-primary: #769656;
+  --color-button-primary-hover: #5a7a42;
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1a1a2e;

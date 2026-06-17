@@ -48,3 +48,5 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+BOT_PST_GUIDE.md
+LEGAL_MOVES_GUIDE.md
