@@ -83,6 +83,24 @@ git push origin <your-branch>
    - **Description:** What changed and why
    - **Related Issue:** Link to the issue (e.g., "Closes #42")
 
+## Resolving Merge Conflicts
+
+CI uses `pnpm install --frozen-lockfile`, which **fails if the lockfile is out of sync** with `package.json`. This prevents broken lockfiles (with conflict markers, duplicate keys, etc.) from being merged into `main`.
+
+If you encounter merge conflicts in `pnpm-lock.yaml` or `package.json`, follow these steps on your PR branch:
+
+```bash
+git checkout issue/<issue-number>-<short-description>
+git merge main
+# Resolve conflicts in package.json and pnpm-lock.yaml
+pnpm install
+git add .
+git commit -m "chore: resolve merge conflicts"
+git push origin issue/<issue-number>-<short-description>
+```
+
+**Do not** resolve lockfile conflicts on GitHub's web editor. Always resolve locally and run `pnpm install` to regenerate a clean lockfile before pushing.
+
 ## Pull Request Guidelines
 
 - One feature/fix per PR

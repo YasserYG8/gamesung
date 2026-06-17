@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "An open-source platform for creating, building, and sharing games",
+  "packageManager": "pnpm@10.28.0",
   "scripts": {
     "dev:web": "pnpm --filter @gamesung/web dev",
     "dev:server": "pnpm --filter @gamesung/server dev",
