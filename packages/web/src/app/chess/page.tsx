@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Chessboard } from "@/components/chess/Chessboard";
 import { createBotGame } from "@/lib/chess-api";
 
-const WS_BASE = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080";
+const WS_BASE = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000";
 
 interface GameState {
   id: string;
@@ -134,6 +134,7 @@ export default function ChessPage() {
   const currentGameState = gameState || {
     fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     moves: [],
+    validMoves: [],
     status: "playing",
     turn: "white",
     players: {},
@@ -165,6 +166,7 @@ export default function ChessPage() {
 
       <Chessboard
         fen={currentGameState.fen}
+        validMoves={currentGameState.validMoves || []}
         onMove={handleMove}
         disabled={!isMyTurn || !connected || currentGameState.status !== "playing"}
       />

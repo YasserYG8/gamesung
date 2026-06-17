@@ -56,7 +56,7 @@ func main() {
 
 	wrapped := corsMiddleware(mux)
 
-	addr := ":8080"
+	addr := ":8000"
 	fmt.Printf("Server starting on %s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, wrapped))
 }

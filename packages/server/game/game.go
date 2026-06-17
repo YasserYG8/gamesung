@@ -2,7 +2,7 @@ package game
 
 import (
 	"sync"
-
+	
 	"github.com/notnil/chess"
 	"github.com/rekabytes/gamesung/packages/server/bot"
 )
@@ -199,7 +199,7 @@ func (g *Game) GetState() map[string]interface{} {
 
 	validMoves := []string{}
 	for _, m := range g.Board.ValidMoves() {
-		validMoves = append(validMoves, chess.AlgebraicNotation{}.Encode(g.Board.Position(), m))
+		validMoves = append(validMoves, chess.UCINotation{}.Encode(g.Board.Position(), m))
 	}
 
 	return map[string]interface{}{
