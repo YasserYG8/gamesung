@@ -282,10 +282,7 @@ func inferWinner(g *game.Game, status string) string {
 	if status != "checkmate" {
 		return ""
 	}
-	if g.GetTurn() == "white" {
-		return "black"
-	}
-	return "white"
+	return g.GetTurn()
 }
 
 func (h *WSHandler) sendGameOver(g *game.Game, status string, winner string) {
