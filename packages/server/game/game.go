@@ -2,7 +2,7 @@ package game
 
 import (
 	"sync"
-	
+
 	"github.com/notnil/chess"
 	"github.com/rekabytes/gamesung/packages/server/bot"
 )
@@ -119,6 +119,48 @@ func (g *Game) MakeMove(moveStr string) (string, error) {
 	}
 
 	return g.Status, nil
+}
+
+func (g *Game) Resign(playerID string) (string, string, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
+
+	if g.Status != "playing" {
+		return "", "", ErrGameNotPlaying
+	}
+
+	if g.BotMode {
+		g.Status = "resigned"
+		return g.Status, g.BotColor, nil
+	}
+
+	color, ok := g.findPlayerColor(playerID)
+	if !ok {
+		return "", "", &GameError{"player not in game"}
+	}
+
+	g.Status = "resigned"
+	winner := "black"
+	if color == "black" {
+		winner = "white"
+	}
+	return g.Status, winner, nil
+}
+
+func (g *Game) findPlayerColor(playerID string) (string, bool) {
+	for color, pid := range g.Players {
+		if pid == playerID {
+			return color, true
+		}
+	}
+	return "", false
+}
+
+func (g *Game) GetTurn() string {
+	g.mu.RLock()
+	defer g.mu.RUnlock()
+
+	return g.Turn
 }
 
 func (g *Game) GetBotMove() (string, error) {

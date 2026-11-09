@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Chessboard } from "@/components/chess/Chessboard";
 import { createBotGame } from "@/lib/chess-api";
 import { MoveList } from "@/components/chess/MoveList";
+import { GameControls } from "@/components/chess/GameControls";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000";
 
@@ -54,6 +55,8 @@ export default function ChessPage() {
             setError(`Checkmate! ${result.winner === playerColor ? "You win!" : "You lose!"}`);
           } else if (result.status === "stalemate") {
             setError("Stalemate! It's a draw.");
+          } else if (result.status === "resigned") {
+            setError(`${result.winner === playerColor ? "Opponent resigned. You win!" : "You resigned."}`);
           } else {
             setError(`Game over: ${result.status}`);
           }
@@ -84,6 +87,14 @@ export default function ChessPage() {
     }
   };
 
+  const handleNewGame = useCallback(() => {
+    wsRef.current?.close();
+    wsRef.current = null;
+    setGameId(null);
+    setGameState(null);
+    setError(null);
+  }, []);
+
   const handleMove = useCallback(
     (move: string) => {
       if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
@@ -91,6 +102,11 @@ export default function ChessPage() {
     },
     []
   );
+
+  const handleResign = useCallback(() => {
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+    wsRef.current.send(JSON.stringify({ type: "resign", payload: { player: "player" } }));
+  }, []);
 
   if (!gameId) {
     return (
@@ -164,6 +180,13 @@ export default function ChessPage() {
           {isMyTurn ? "Your turn" : "Bot is thinking..."}
         </div>
       </div>
+
+      <GameControls
+        onResign={handleResign}
+        onNewGame={handleNewGame}
+        disabled={!isMyTurn || !connected}
+        gameOver={currentGameState.status !== "playing"}
+      />
 
       <Chessboard
         fen={currentGameState.fen}

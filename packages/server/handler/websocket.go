@@ -39,6 +39,10 @@ type MovePayload struct {
 	Move string `json:"move"`
 }
 
+type ResignPayload struct {
+	Player string `json:"player"`
+}
+
 type CreateBotPayload struct {
 	PlayerColor string `json:"playerColor"`
 	Difficulty  int    `json:"difficulty"`
@@ -176,10 +180,31 @@ func (h *WSHandler) readPump(client *game.Client, g *game.Game) {
 			h.sendGameUpdate(g)
 
 			if status == "checkmate" || status == "stalemate" || status == "draw" {
-				h.sendGameOver(g, status)
+				h.sendGameOver(g, status, inferWinner(g, status))
 			} else if g.BotMode && g.IsBotTurn() {
 				go h.handleBotMove(g)
 			}
+
+		case "resign":
+			if client.PlayerID == "" {
+				h.sendError(client, "must join game first")
+				continue
+			}
+
+			var payload ResignPayload
+			if err := json.Unmarshal(msg.Payload, &payload); err != nil {
+				h.sendError(client, "invalid resign payload")
+				continue
+			}
+
+			status, winner, err := g.Resign(payload.Player)
+			if err != nil {
+				h.sendError(client, err.Error())
+				continue
+			}
+
+			h.sendGameUpdate(g)
+			h.sendGameOver(g, status, winner)
 
 		case "ping":
 			h.send(client, WSMessage{Type: "pong"})
@@ -207,7 +232,7 @@ func (h *WSHandler) handleBotMove(g *game.Game) {
 		} else {
 			status = "draw"
 		}
-		h.sendGameOver(g, status)
+		h.sendGameOver(g, status, inferWinner(g, status))
 	}
 }
 
@@ -253,16 +278,17 @@ func (h *WSHandler) sendGameUpdate(g *game.Game) {
 	h.Hub.Broadcast(g.ID, msgData)
 }
 
-func (h *WSHandler) sendGameOver(g *game.Game, status string) {
-	winner := g.Turn
-	if status == "checkmate" {
-		if g.Turn == "white" {
-			winner = "black"
-		} else {
-			winner = "white"
-		}
+func inferWinner(g *game.Game, status string) string {
+	if status != "checkmate" {
+		return ""
 	}
+	if g.GetTurn() == "white" {
+		return "black"
+	}
+	return "white"
+}
 
+func (h *WSHandler) sendGameOver(g *game.Game, status string, winner string) {
 	data, _ := json.Marshal(map[string]string{
 		"status": status,
 		"winner": winner,
