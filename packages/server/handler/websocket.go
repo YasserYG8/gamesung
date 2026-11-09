@@ -256,11 +256,7 @@ func (h *WSHandler) sendGameUpdate(g *game.Game) {
 func (h *WSHandler) sendGameOver(g *game.Game, status string) {
 	winner := g.Turn
 	if status == "checkmate" {
-		if g.Turn == "white" {
-			winner = "black"
-		} else {
-			winner = "white"
-		}
+	  winner = g.Turn
 	}
 
 	data, _ := json.Marshal(map[string]string{
